@@ -1,9 +1,8 @@
 package com.admas.volley.home;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
@@ -20,14 +19,8 @@ import android.widget.Toast;
 import com.admas.volley.Adapter.StudentAdapter;
 import com.admas.volley.R;
 import com.admas.volley.RetrofitClient;
-import com.admas.volley.misc.Constants;
-import com.admas.volley.misc.MySingleton;
 import com.admas.volley.misc.SharedPrefManager;
 import com.admas.volley.welcome.UserHome;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,9 +28,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -47,7 +38,8 @@ public class StudentHome extends AppCompatActivity {
     boolean doubleBackToExitPressedOnce = false;
     RecyclerView recyclerView;
     List<String> courseList;
-    List<String> percentageList;
+    List<String> countList;
+    List<String> percentList;
     String student="";
     ProgressDialog progressDialog;
     StudentAdapter studentAdapter;
@@ -58,7 +50,8 @@ public class StudentHome extends AppCompatActivity {
         recyclerView= findViewById(R.id.attended_list);
 
         courseList=new ArrayList<>();
-        percentageList= new ArrayList<>();
+        countList = new ArrayList<>();
+        percentList = new ArrayList<>();
         progressDialog= new ProgressDialog(this);
         progressDialog.setMessage("please wait");
 
@@ -99,7 +92,13 @@ public class StudentHome extends AppCompatActivity {
                         JSONArray jArray1= jSONObject.getJSONArray("percentage");
                         for (int j = 0; j < jArray.length(); j++) {
                             courseList.add(jArray.getString(j));
-                            percentageList.add(jArray1.getString(j));
+                            countList.add(jArray1.getString(j));
+                            String per = jArray1.getString(j);
+                            String [] nums=per.split("/");
+                            Double x = Double.parseDouble(nums[0]);
+                            Double y = Double.parseDouble(nums[1]);
+                            Double z = ((x / y) * 100.0);
+                            percentList.add(String.format("%.1f", z) +"%");
                         }
                     } catch (JSONException jSONException) {
                         jSONException.printStackTrace();
@@ -120,9 +119,9 @@ public class StudentHome extends AppCompatActivity {
     }
     public void setlist(){
 
-        studentAdapter = new StudentAdapter(courseList, percentageList);
+        studentAdapter = new StudentAdapter(courseList, countList,percentList);
         recyclerView.setAdapter(studentAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
 
     }
 

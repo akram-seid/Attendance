@@ -2,7 +2,6 @@ package com.admas.volley;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,26 +10,16 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import org.apache.commons.lang3.StringUtils;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.admas.volley.Adapter.CustomAdapter;
 import com.admas.volley.home.TeacherHome;
-import com.admas.volley.misc.Constants;
-import com.admas.volley.misc.MySingleton;
 import com.admas.volley.misc.SharedPrefManager;
 import com.admas.volley.models.Attendance;
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,33 +28,30 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
 public class AttendanceTaker extends AppCompatActivity implements Present {
-    private List<String> nameList = new ArrayList<>();
-    private List<String> idList = new ArrayList<>();
     public List<String> preList = new ArrayList<>();
     public List<String> perList = new ArrayList<>();
     public List<String> seslist = new ArrayList<>();
+    Attendance attendance = new Attendance();
+    ProgressDialog progressDialog;
+    private final List<String> nameList = new ArrayList<>();
+    private final List<String> idList = new ArrayList<>();
     private String course = "";
     private String section = "";
     private String instructor;
     private String currentDate;
-    private  RecyclerView recyclerView;
+    private RecyclerView recyclerView;
     private Button btn;
-     Attendance attendance = new Attendance();
     private String res = "";
     private String reso = null;
     private String rest = "";
-    ProgressDialog progressDialog;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,31 +71,24 @@ public class AttendanceTaker extends AppCompatActivity implements Present {
         id_fetcher(section);
         progressDialog.show();
 
-        CustomAdapter customAdapter = new CustomAdapter(nameList, idList, this);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,1));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(customAdapter);
-
 
     }
-
 
 
     private void save_attendance(Attendance attendance) {
 
 
-
-            res = StringUtils.join(attendance.getPreList(), ",");
+        res = StringUtils.join(attendance.getPreList(), ",");
 
 
         if (attendance.getPerList().size() != 0) {
 
-                reso = StringUtils.join(attendance.getPerList(), ",");
+            reso = StringUtils.join(attendance.getPerList(), ",");
 
         }
 
 
-         rest= StringUtils.join(attendance.getSeslist(), ",");
+        rest = StringUtils.join(attendance.getSeslist(), ",");
 
         System.out.println(res);
         System.out.println(reso);
@@ -119,7 +98,7 @@ public class AttendanceTaker extends AppCompatActivity implements Present {
         Call<ResponseBody> call = RetrofitClient
                 .getInstance()
                 .getApi()
-                .save_attendance(rest,res,reso);
+                .save_attendance(rest, res, reso);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull retrofit2.Response<ResponseBody> response) {
@@ -168,9 +147,8 @@ public class AttendanceTaker extends AppCompatActivity implements Present {
         });
 
 
-
-
     }
+
     public void id_fetcher(String section) {
 
 
@@ -206,7 +184,7 @@ public class AttendanceTaker extends AppCompatActivity implements Present {
                         jSONException.printStackTrace();
                     }
                 }
-                progressDialog.dismiss();
+
 
             }
 
@@ -220,7 +198,6 @@ public class AttendanceTaker extends AppCompatActivity implements Present {
     }
 
     public void name_fetcher(String section) {
-
 
 
         Call<ResponseBody> call = RetrofitClient
@@ -256,6 +233,8 @@ public class AttendanceTaker extends AppCompatActivity implements Present {
                         jSONException.printStackTrace();
                     }
                 }
+                show_students();
+                progressDialog.dismiss();
 
             }
 
@@ -268,6 +247,14 @@ public class AttendanceTaker extends AppCompatActivity implements Present {
         });
 
     }
+
+    public void show_students() {
+        CustomAdapter customAdapter = new CustomAdapter(nameList, idList, this);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(customAdapter);
+    }
+
     @Override
     public void Studentlist(List<String> presentlist) {
         System.out.println(presentlist);
@@ -315,8 +302,6 @@ public class AttendanceTaker extends AppCompatActivity implements Present {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 
 
 }

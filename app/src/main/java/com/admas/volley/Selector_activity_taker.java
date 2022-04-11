@@ -55,8 +55,12 @@ public class Selector_activity_taker extends AppCompatActivity {
         section_spinner = findViewById(R.id.section_spinner);
         //submit button for the chosen Items
         Button submit = findViewById(R.id.submit_btn);
+
+        cou_list= new ArrayList<>();
+        sec_list = new ArrayList<>();
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Please Wait!");
+
 
         course_fetcher();
 
@@ -68,9 +72,7 @@ public class Selector_activity_taker extends AppCompatActivity {
                 current_course = adapter_course.getItem(i);
                 section_fetcher(current_course);
 
-                adapter_section = new ArrayAdapter<>(Selector_activity_taker.this, R.layout.dropdown_item, sec_list);
-                adapter_section.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                section_spinner.setAdapter(adapter_section);
+
 
             }
         });
@@ -104,7 +106,7 @@ public class Selector_activity_taker extends AppCompatActivity {
         Call<ResponseBody> call = RetrofitClient
                 .getInstance()
                 .getApi()
-                .fetch_course_ins(current_course);
+                .fetch_section_ins(current_course);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
@@ -133,7 +135,7 @@ public class Selector_activity_taker extends AppCompatActivity {
                         jSONException.printStackTrace();
                     }
                 }
-
+                show_section();
             }
 
 
@@ -201,6 +203,12 @@ public class Selector_activity_taker extends AppCompatActivity {
         adapter_course = new ArrayAdapter<>(Selector_activity_taker.this, R.layout.dropdown_item, cou_list);
         adapter_course.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         course_spinner.setAdapter(adapter_course);
+    }
+
+    public void show_section(){
+        adapter_section = new ArrayAdapter<>(Selector_activity_taker.this, R.layout.dropdown_item, sec_list);
+        adapter_section.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        section_spinner.setAdapter(adapter_section);
     }
 
 

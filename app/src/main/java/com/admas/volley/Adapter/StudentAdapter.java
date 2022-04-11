@@ -5,30 +5,29 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.admas.volley.Present;
 import com.admas.volley.R;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHolder> {
 
     List<String> courseList;
-    List<String> percentageList;
+    List<String> countList;
+    List<String> percentList;
 
 
 
 
-    public StudentAdapter(List<String> courseList, List<String> percentageList) {
+    public StudentAdapter(List<String> courseList, List<String> countList, List<String> percentList) {
         this.courseList = courseList;
-        this.percentageList= percentageList;
+        this.countList = countList;
+        this.percentList = percentList;
 
     }
 
@@ -45,10 +44,13 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
     }
 
     // Replace the contents of a view (invoked by the layout manager)
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-            holder.course_name.setText(courseList.get(position));
-            holder.percentage.setText(percentageList.get(position));
+
+            holder.percent.setText(percentList.get(position));
+        holder.course_name.setText(courseList.get(position));
+        holder.count.setText(countList.get(position));
 
 
     }
@@ -61,7 +63,8 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView course_name;
-        public TextView percentage;
+        public TextView count;
+        public TextView percent;
 
 
         public ViewHolder(View view) {
@@ -69,7 +72,8 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
             // Define click listener for the ViewHolder's View
 
             course_name = itemView.findViewById(R.id.course_name);
-            percentage = itemView.findViewById(R.id.percentage);
+            count = itemView.findViewById(R.id.count);
+            percent= itemView.findViewById(R.id.percentage);
 
 
         }
