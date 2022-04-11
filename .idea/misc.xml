@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/drawable/border_blue.xml" value="0.1" />
+        <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout-w936dp/taker_row.xml" value="0.22" />
+        <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout-w936dp/taker_row1.xml" value="0.1" />
+        <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout/activity_attendance_taker.xml" value="0.17074275362318841" />
+        <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout/activity_attendance_viewer_t.xml" value="0.12364130434782608" />
+        <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout/activity_selector.xml" value="0.22" />
+        <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout/activity_set_session.xml" value="0.12364130434782608" />
+        <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout/activity_student_home.xml" value="0.17074275362318841" />
+        <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout/activity_teacher_home.xml" value="0.12364130434782608" />
+        <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout/activity_teacher_login.xml" value="0.17074275362318841" />
+        <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout/dropdown_item.xml" value="0.17074275362318841" />
+        <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout/student_row.xml" value="0.33" />
+        <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout/student_row_child.xml" value="0.16467065868263472" />
+        <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout/student_row_header.xml" value="0.2" />
+        <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout/taker_row.xml" value="0.21568627450980393" />
+        <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout/taker_row2.xml" value="0.2" />
+        <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/menu/menu.xml" value="0.2" />
+        <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/menu/menu_save.xml" value="0.2" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

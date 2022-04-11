@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.admas.volley">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Volley"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".Selector_activity_viewer"
+            android:exported="false" />
+        <activity
+            android:name=".Selector_activity_taker"
+            android:exported="false" />
+        <activity
+            android:name=".SetSession"
+            android:exported="true" />
+        <activity
+            android:name=".AttendanceViewerT"
+            android:exported="true" />
+        <activity
+            android:name=".AttendanceTaker"
+            android:exported="true" />
+        <activity
+            android:name=".home.StudentHome"
+            android:exported="true" />
+        <activity
+            android:name=".home.TeacherHome"
+            android:noHistory="true"
+            android:exported="true" />
+        <activity
+            android:name=".login.StudentLogin"
+            android:exported="true" />
+        <activity
+            android:name=".login.TeacherLogin"
+            android:exported="true" />
+        <activity
+            android:name=".welcome.UserHome"
+            android:exported="true" />
+        <activity
+            android:name=".welcome.SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

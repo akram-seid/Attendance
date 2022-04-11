@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="17.0dip">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2.0dip"
+        android:background="@drawable/shape_border">
+
+        <Spinner
+            android:id="@+id/sec1Sp"
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15.0dip"
+        android:background="@drawable/shape_border">
+
+        <Spinner
+            android:id="@+id/courSp"
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/selectNextBtn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40.0dip"
+        android:background="@drawable/shape_gradient_button"
+        android:text="@string/next"
+        android:textColor="@color/notification_icon"
+        android:textSize="15.0sp" />
+</LinearLayout>
