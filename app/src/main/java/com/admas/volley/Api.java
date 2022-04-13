@@ -62,4 +62,13 @@ public interface Api {
             @Field("present") String res,
             @Field("permission") String reso
     );
+
+    @FormUrlEncoded
+    @POST("changepass")
+    Call<ResponseBody> change_pass(
+            @Field("id") String user_id,
+            @Field("table") String table,
+            @Field("old") String old_pass,
+            @Field("pass") String new_pass
+    );
 }

@@ -105,6 +105,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             permis = itemView.findViewById(R.id.perm_btn);
             status_box = itemView.findViewById(R.id.status);
 
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    System.out.println("Item clicked" + getAdapterPosition());
+
+
+                }
+            });
 
         }
 

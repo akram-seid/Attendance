@@ -2,10 +2,13 @@ package com.admas.volley.Adapter;
 
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +17,7 @@ import com.admas.volley.R;
 
 
 import java.util.List;
+import java.util.Random;
 
 public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHolder> {
 
@@ -51,7 +55,12 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
             holder.percent.setText(percentList.get(position));
         holder.course_name.setText(courseList.get(position));
         holder.count.setText(countList.get(position));
-
+        if(position%2 == 1) {
+            holder.layout.setBackgroundResource(R.drawable.gradient);
+        }
+        else{
+            holder.layout.setBackgroundResource(R.drawable.gradient2);
+        }
 
     }
 
@@ -65,6 +74,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
         public TextView course_name;
         public TextView count;
         public TextView percent;
+        public LinearLayout layout;
 
 
         public ViewHolder(View view) {
@@ -74,6 +84,9 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
             course_name = itemView.findViewById(R.id.course_name);
             count = itemView.findViewById(R.id.count);
             percent= itemView.findViewById(R.id.percentage);
+            layout = itemView.findViewById(R.id.student_row_layout);
+
+
 
 
         }

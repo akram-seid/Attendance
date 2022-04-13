@@ -9,17 +9,31 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.admas.volley.R;
+import com.admas.volley.RetrofitClient;
 import com.admas.volley.Selector_activity_taker;
 import com.admas.volley.Selector_activity_viewer;
 import com.admas.volley.misc.SharedPrefManager;
 import com.admas.volley.welcome.UserHome;
+import com.google.android.material.snackbar.Snackbar;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class TeacherHome extends AppCompatActivity {
     boolean doubleBackToExitPressedOnce = false;
@@ -60,9 +74,9 @@ public class TeacherHome extends AppCompatActivity {
         if (i != R.id.logoutbtn) {
             if (i != R.id.pass_cng) {
                 if (i == R.id.refresh)
-                    Toast.makeText(this, "seetings button", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "refresh button", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "Change password", Toast.LENGTH_SHORT).show();
+                pass_changer();
             }
         } else {
             logouter();
@@ -100,6 +114,100 @@ public class TeacherHome extends AppCompatActivity {
                 doubleBackToExitPressedOnce = false;
             }
         },  2000L);
+    }
+    private void pass_changer() {
+        String user_id = String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getUserId());
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        final View customLayout = getLayoutInflater().inflate(R.layout.alert_label_editor, null);
+        alertDialog.setView(customLayout);
+        EditText old_passT = customLayout.findViewById(R.id.old_field);
+        EditText new_passT = customLayout.findViewById(R.id.new_field);
+        EditText con_passT = customLayout.findViewById(R.id.confirm_field);
+        Button save = customLayout.findViewById(R.id.changebtn);
+        Button cancel = customLayout.findViewById(R.id.cancelbtn);
+        AlertDialog alert = alertDialog.create();
+
+        alert.show();
+        save.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View view) {
+                String old_pass = old_passT.getText().toString().trim();
+                String new_pass = new_passT.getText().toString().trim();
+                String con_pass = con_passT.getText().toString().trim();
+
+                if (old_pass.length() < 6 || old_pass.length() > 16) {
+                    old_passT.setError("Password must between 6 and 16 characters");
+                } else if (new_pass.length() < 6 || new_pass.length() > 16) {
+                    new_passT.setError("Password must between 6 and 16 characters");
+                } else if (con_pass.length() < 6 || con_pass.length() > 16) {
+                    new_passT.setError("Password must between 6 and 16 characters");
+                } else if (!con_pass.equals(new_pass)) {
+                    con_passT.setError("Password Mismatch!");
+                } else {
+                    Call<ResponseBody> call = RetrofitClient
+                            .getInstance()
+                            .getApi()
+                            .change_pass(user_id, "students", old_pass, con_pass);
+                    call.enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                            String s = null;
+                            try {
+                                if (response.code() == 201) {
+                                    s = response.body().string();
+
+                                } else {
+                                    s = response.errorBody().string();
+
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            if (s != null) {
+                                try {
+                                    JSONObject jSONObject = new JSONObject(s);
+                                    if (!jSONObject.getBoolean("error")) {
+
+                                        Snackbar.make(findViewById(R.id.myCoordinatorLayout),jSONObject.getString("Message") ,
+                                                Snackbar.LENGTH_SHORT)
+                                                .show();
+                                        alert.dismiss();
+
+                                    } else {
+                                        Toast.makeText(TeacherHome.this, jSONObject.getString("Message"), Toast.LENGTH_SHORT).show();
+
+                                    }
+                                } catch (JSONException jSONException) {
+                                    jSONException.printStackTrace();
+                                }
+                            }
+                        }
+
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            Toast.makeText(TeacherHome.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+                }
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+            }
+        });
+
+
+
+
+
+
     }
     
 }

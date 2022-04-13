@@ -42,4 +42,9 @@
     <string name="update">Save</string>
     <string name="about">About</string>
     <string name="refresh">Refresh</string>
+    <string name="old">Old Password</string>
+    <string name="new_pass">New Password</string>
+    <string name="confirm_pass">Confirm Password</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
 </resources>

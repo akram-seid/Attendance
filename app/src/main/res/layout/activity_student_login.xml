@@ -48,7 +48,6 @@
                 android:id="@+id/usern_field"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-
                 android:hint="@string/username"
                 tools:ignore="TextContrastCheck" />
         </com.google.android.material.textfield.TextInputLayout>

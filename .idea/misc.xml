@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/drawable/border_blue.xml" value="0.1" />
+        <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/drawable/gradient.xml" value="0.2075" />
+        <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/drawable/gradient2.xml" value="0.2075" />
         <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout-w936dp/taker_row.xml" value="0.22" />
         <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout-w936dp/taker_row1.xml" value="0.1" />
         <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout/activity_attendance_taker.xml" value="0.17074275362318841" />
@@ -11,8 +13,10 @@
         <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout/activity_selector.xml" value="0.22" />
         <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout/activity_set_session.xml" value="0.12364130434782608" />
         <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout/activity_student_home.xml" value="0.17074275362318841" />
+        <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout/activity_student_login.xml" value="0.16417272338606242" />
         <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout/activity_teacher_home.xml" value="0.12364130434782608" />
         <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout/activity_teacher_login.xml" value="0.17074275362318841" />
+        <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout/alert_label_editor.xml" value="0.16417272338606242" />
         <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout/dropdown_item.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout/student_row.xml" value="0.33" />
         <entry key="..\:/Users/Mint/AndroidStudioProjects/Volley/app/src/main/res/layout/student_row_child.xml" value="0.16467065868263472" />

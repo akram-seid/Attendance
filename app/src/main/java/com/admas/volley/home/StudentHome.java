@@ -3,6 +3,7 @@ package com.admas.volley.home;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
@@ -11,9 +12,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.admas.volley.Adapter.StudentAdapter;
@@ -21,6 +26,7 @@ import com.admas.volley.R;
 import com.admas.volley.RetrofitClient;
 import com.admas.volley.misc.SharedPrefManager;
 import com.admas.volley.welcome.UserHome;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,7 +70,9 @@ public class StudentHome extends AppCompatActivity {
         student= String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getUserId());
 
         progressDialog.show();
-
+        countList.clear();
+        percentList.clear();
+        courseList.clear();
         Call<ResponseBody> call = RetrofitClient
                 .getInstance()
                 .getApi()
@@ -121,7 +129,7 @@ public class StudentHome extends AppCompatActivity {
 
         studentAdapter = new StudentAdapter(courseList, countList,percentList);
         recyclerView.setAdapter(studentAdapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
@@ -167,15 +175,103 @@ public class StudentHome extends AppCompatActivity {
         if (i != R.id.logoutbtn) {
             if (i != R.id.pass_cng) {
                 if (i == R.id.refresh)
-                    Toast.makeText(this, "Refreshing...", Toast.LENGTH_SHORT).show();
-                setlist();
+                fetch_attendance();
             } else {
-                Toast.makeText(this, "Change password", Toast.LENGTH_SHORT).show();
+                pass_changer();
             }
         } else {
             logouter();
         }
         return true;
+    }
+
+    private void pass_changer() {
+        String user_id=String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getUserId());
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.alert_label_editor, null);
+        dialogBuilder.setView(dialogView);
+
+        EditText old_passT = dialogView.findViewById(R.id.old_field);
+        EditText new_passT = dialogView.findViewById(R.id.new_field);
+        EditText con_passT = dialogView.findViewById(R.id.confirm_field);
+        Button save = dialogView.findViewById(R.id.changebtn);
+        Button cancel = dialogView.findViewById(R.id.cancelbtn);
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+
+        save.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+                String old_pass = old_passT.getText().toString().trim();
+                String new_pass = new_passT.getText().toString().trim();
+                String con_pass = con_passT.getText().toString().trim();
+
+                if (old_pass.length() < 6 || old_pass.length() > 16) {
+                    old_passT.setError("Password must between 6 and 16 characters");
+                } else if (new_pass.length() < 6 || new_pass.length() > 16) {
+                    new_passT.setError("Password must between 6 and 16 characters");
+                } else if (con_pass.length() < 6 || con_pass.length() > 16) {
+                    new_passT.setError("Password must between 6 and 16 characters");
+                } else if (!con_pass.equals(new_pass)) {
+                    con_passT.setError("Password Mismatch!");
+                } else {
+                    Call<ResponseBody> call = RetrofitClient
+                            .getInstance()
+                            .getApi()
+                            .change_pass(user_id,"students",old_pass,con_pass);
+                    call.enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                            String s = null;
+                            try {
+                                if (response.code() == 201) {
+                                    s = response.body().string();
+
+                                } else {
+                                    s = response.errorBody().string();
+
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            if (s != null) {
+                                try {
+                                    JSONObject jSONObject = new JSONObject(s);
+                                    if (!jSONObject.getBoolean("error")) {
+
+                                        Snackbar.make(findViewById(R.id.myCoordinatorLayout),jSONObject.getString("Message") ,
+                                                Snackbar.LENGTH_SHORT)
+                                                .show();
+                                            alertDialog.dismiss();
+                                    } else {
+                                        Toast.makeText(StudentHome.this, jSONObject.getString("Message"), Toast.LENGTH_SHORT).show();
+
+                                    }
+                                } catch (JSONException jSONException) {
+                                    jSONException.printStackTrace();
+                                }
+                            }
+
+                        }
+
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            Toast.makeText(StudentHome.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+                }
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.show();
     }
 
 }
